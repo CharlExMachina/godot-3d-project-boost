@@ -1,0 +1,56 @@
+[gd_scene load_steps=8 format=3 uid="uid://c0t28b6goculu"]
+
+[ext_resource type="PackedScene" uid="uid://d2o4en7045888" path="res://player.tscn" id="1_u52ul"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5xgho"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_u52ul"]
+sky_material = SubResource("ProceduralSkyMaterial_5xgho")
+
+[sub_resource type="Environment" id="Environment_vonw3"]
+background_mode = 2
+sky = SubResource("Sky_u52ul")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5xgho"]
+albedo_color = Color(0.314692, 0.0898623, 0.030847, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u52ul"]
+albedo_color = Color(0.030886, 0.47477, 0.958749, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vonw3"]
+albedo_color = Color(0.170132, 0.676268, 0.343459, 1)
+
+[node name="Level" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vonw3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866024, -0.433016, 0.250001, 0.453943, -0.471295, 0.756186, -0.209616, 0.76836, 0.604717, 0.0801497, 5.5114, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.993534, 0.113533, 0, -0.113533, 0.993534, 0, 3.79128, 12.3116)
+
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+use_collision = true
+size = Vector3(30, 8, 5)
+material = SubResource("StandardMaterial3D_5xgho")
+
+[node name="LaunchPad" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.8796, 4.25, 0)
+size = Vector3(3, 0.5, 3)
+material = SubResource("StandardMaterial3D_u52ul")
+
+[node name="LandingPad" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.88, 4.25, 0)
+size = Vector3(3, 0.5, 3)
+material = SubResource("StandardMaterial3D_vonw3")
+
+[node name="Player" parent="." instance=ExtResource("1_u52ul")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.8796, 1.5, 0)
