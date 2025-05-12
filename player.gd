@@ -1,27 +1,53 @@
 extends RigidBody3D
 
 
+@onready var explosion_audio: AudioStreamPlayer = $ExplosionAudio
+@onready var success_audio: AudioStreamPlayer = $SuccessAudio
+@onready var rocket_audio: AudioStreamPlayer3D = $RocketAudio
+@onready var booster_particles: GPUParticles3D = $BoosterParticles
+@onready var booster_particles_left: GPUParticles3D = $BoosterParticlesLeft
+@onready var booster_particles_right: GPUParticles3D = $BoosterParticlesRight
+
 ## How much vertical force to apply when moving
 @export_range(75.0, 3_000.0) var thrust: float = 1_000.0
 
 ## How much rotation force to apply while moving
 @export var torque: float = 100.0
 
+## Controls whether or not the player is in the process of changing scenes
+var is_transitioning: bool = false
+
 
 func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("boost"):
 		apply_central_force(basis.y * delta * thrust)
+		booster_particles.emitting = true
 
-	if Input.is_action_pressed("rotate_left"):
+		if not rocket_audio.playing:
+			rocket_audio.play()
+	else:
+		booster_particles.emitting = false
+		rocket_audio.stop()
+
+	if Input.is_action_pressed("rotate_left") and not Input.is_action_pressed("rotate_right"):
+		booster_particles_right.emitting = true
 		apply_torque(Vector3(0.0, 0.0, torque * delta))
-	elif Input.is_action_pressed("rotate_right"):
+	else:
+		booster_particles_right.emitting = false
+
+	if Input.is_action_pressed("rotate_right") and not Input.is_action_just_released("rotate_left"):
+		booster_particles_left.emitting = true
 		apply_torque(Vector3(0.0, 0.0, -torque * delta))
+	else:
+		booster_particles_left.emitting = false
 
 
 func _on_body_entered(body: Node) -> void:
+	if is_transitioning:
+		return
+
 	if "Goal" in body.get_groups():
-		print("You've won!")
-		complete_level()
+		complete_level(body.next_level_path)
 	elif "Start" in body.get_groups():
 		print("Starting position set!")
 	elif "Hazard" in body.get_groups():
@@ -29,10 +55,22 @@ func _on_body_entered(body: Node) -> void:
 
 
 func crash_sequence() -> void:
-	get_tree().call_deferred("reload_current_scene")
-	get_tree().quit()
+	explosion_audio.play()
+	is_transitioning = true
+	set_physics_process(false)
+	var tween = create_tween()
+
+	tween.tween_interval(2.5)
+	tween.tween_callback(get_tree().reload_current_scene)
 
 
+func complete_level(next_level_file: String) -> void:
+	success_audio.play()
+	is_transitioning = true
+	set_physics_process(false)
+	var tween = create_tween()
 
-func complete_level() -> void:
-	get_tree().quit()
+	tween.tween_interval(1.0)
+	tween.tween_callback(
+		get_tree().change_scene_to_file.bind(next_level_file)
+	)
