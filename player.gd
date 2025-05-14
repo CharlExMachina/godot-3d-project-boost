@@ -7,6 +7,8 @@ extends RigidBody3D
 @onready var booster_particles: GPUParticles3D = $BoosterParticles
 @onready var booster_particles_left: GPUParticles3D = $BoosterParticlesLeft
 @onready var booster_particles_right: GPUParticles3D = $BoosterParticlesRight
+@onready var explosion_particles: GPUParticles3D = $ExplosionParticles
+@onready var success_particles: GPUParticles3D = $SuccessParticles
 
 ## How much vertical force to apply when moving
 @export_range(75.0, 3_000.0) var thrust: float = 1_000.0
@@ -55,6 +57,12 @@ func _on_body_entered(body: Node) -> void:
 
 
 func crash_sequence() -> void:
+	booster_particles.emitting = false
+	booster_particles_left.emitting = false
+	booster_particles_right.emitting = false
+	rocket_audio.stop()
+
+	explosion_particles.emitting = true
 	explosion_audio.play()
 	is_transitioning = true
 	set_physics_process(false)
@@ -65,6 +73,7 @@ func crash_sequence() -> void:
 
 
 func complete_level(next_level_file: String) -> void:
+	success_particles.emitting = true
 	success_audio.play()
 	is_transitioning = true
 	set_physics_process(false)
