@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://d2o4en7045888"]
+[gd_scene load_steps=18 format=3 uid="uid://d2o4en7045888"]
 
 [ext_resource type="Script" uid="uid://bdc3q6tw6bwvt" path="res://player.gd" id="1_4flbx"]
 [ext_resource type="AudioStream" uid="uid://b8jy70o4l7y6r" path="res://audio/SFX - Death Explosion.ogg" id="2_onrkg"]
@@ -11,6 +11,44 @@
 [sub_resource type="CylinderMesh" id="CylinderMesh_hqtel"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_4flbx"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_1jxqw"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 1.2
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_dw050"]
+top_radius = 0.0
+bottom_radius = 0.2
+height = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_b26j0"]
+top_radius = 0.22
+bottom_radius = 0.22
+height = 0.12
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_n7ghd"]
+top_radius = 0.14
+bottom_radius = 0.14
+height = 0.12
+
+[sub_resource type="PrismMesh" id="PrismMesh_n7ghd"]
+left_to_right = 0.0
+size = Vector3(0.4, 0.5, 0.04)
+
+[sub_resource type="PrismMesh" id="PrismMesh_nvl01"]
+left_to_right = 1.0
+size = Vector3(0.4, 0.5, 0.04)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_nvl01"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.3
+
+[sub_resource type="TorusMesh" id="TorusMesh_1jxqw"]
+inner_radius = 0.128
+outer_radius = 0.212
+rings = 32
 
 [node name="Player" type="RigidBody3D"]
 axis_lock_linear_z = true
@@ -25,6 +63,7 @@ thrust = 1500.0
 metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("CylinderMesh_hqtel")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -45,13 +84,93 @@ stream = ExtResource("4_hqtel")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
 [node name="BoosterParticlesRight" parent="." instance=ExtResource("5_sweqy")]
-transform = Transform3D(0.670051, -0.742315, 0, 0.742315, 0.670051, 0, 0, 0, 1, 0.5, -1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.294062, -1, 0)
 
 [node name="BoosterParticlesLeft" parent="." instance=ExtResource("5_sweqy")]
-transform = Transform3D(0.670427, 0.741976, 0, -0.741976, 0.670427, 0, 0, 0, 1, -0.5, -1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.301063, -1, 0)
 
 [node name="ExplosionParticles" parent="." instance=ExtResource("6_2hs0m")]
 
 [node name="SuccessParticles" parent="." instance=ExtResource("7_1jxqw")]
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+mesh = SubResource("CylinderMesh_1jxqw")
+
+[node name="Cockpit" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.925, 0)
+mesh = SubResource("CylinderMesh_dw050")
+skeleton = NodePath("../..")
+
+[node name="OuterRing" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.509185, 0)
+mesh = SubResource("CylinderMesh_b26j0")
+
+[node name="CockpitBridge" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.638633, 0)
+mesh = SubResource("CylinderMesh_n7ghd")
+
+[node name="OuterRing2" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.296421, 0)
+mesh = SubResource("CylinderMesh_b26j0")
+
+[node name="OuterRing3" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0746808, 0)
+mesh = SubResource("CylinderMesh_b26j0")
+
+[node name="FrontWingsContainer" type="Node3D" parent="Body"]
+
+[node name="WingLeft" type="MeshInstance3D" parent="Body/FrontWingsContainer"]
+transform = Transform3D(-0.853551, 0, -0.52101, 0, 1, 0, 0.52101, 0, -0.853551, -0.334, -0.254, 0.193)
+mesh = SubResource("PrismMesh_n7ghd")
+skeleton = NodePath("../..")
+
+[node name="WingCenter" type="MeshInstance3D" parent="Body/FrontWingsContainer"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -5.75483e-05, -0.254407, 0.355877)
+mesh = SubResource("PrismMesh_nvl01")
+skeleton = NodePath("../..")
+
+[node name="WingRight" type="MeshInstance3D" parent="Body/FrontWingsContainer"]
+transform = Transform3D(0.903163, 0, -0.429298, 0, 1, 0, 0.429298, 0, 0.903163, 0.334267, -0.254407, 0.19264)
+mesh = SubResource("PrismMesh_n7ghd")
+skeleton = NodePath("../..")
+
+[node name="BackWingsContainer" type="Node3D" parent="Body"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="WingLeft" type="MeshInstance3D" parent="Body/BackWingsContainer"]
+transform = Transform3D(-0.853551, 0, -0.52101, 0, 1, 0, 0.52101, 0, -0.853551, -0.334, -0.254, 0.193)
+mesh = SubResource("PrismMesh_n7ghd")
+skeleton = NodePath("../..")
+
+[node name="WingCenter" type="MeshInstance3D" parent="Body/BackWingsContainer"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -5.75483e-05, -0.254407, 0.355877)
+mesh = SubResource("PrismMesh_nvl01")
+skeleton = NodePath("../..")
+
+[node name="WingRight" type="MeshInstance3D" parent="Body/BackWingsContainer"]
+transform = Transform3D(0.903163, 0, -0.429298, 0, 1, 0, 0.429298, 0, 0.903163, 0.334267, -0.254407, 0.19264)
+mesh = SubResource("PrismMesh_n7ghd")
+skeleton = NodePath("../..")
+
+[node name="BoosterCenter" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.597432, 0)
+mesh = SubResource("CylinderMesh_nvl01")
+
+[node name="BoosterRight" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.300147, -0.597432, 0)
+mesh = SubResource("CylinderMesh_nvl01")
+
+[node name="BoosterLeft" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.300402, -0.597432, 0)
+mesh = SubResource("CylinderMesh_nvl01")
+
+[node name="TubeLeft" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.140089, -0.389676, 0)
+mesh = SubResource("TorusMesh_1jxqw")
+
+[node name="TubeRight" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.134544, -0.389676, 0)
+mesh = SubResource("TorusMesh_1jxqw")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
