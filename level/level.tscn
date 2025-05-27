@@ -35,7 +35,7 @@ transform = Transform3D(-0.866024, -0.433016, 0.250001, 0.453943, -0.471295, 0.7
 shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.993534, 0.113533, 0, -0.113533, 0.993534, 0, 3.79128, 12.3116)
+transform = Transform3D(1, 0, 0, 0, 0.998135, 0.0610485, 0, -0.0610485, 0.998135, 0, 7.391, 12.312)
 
 [node name="LaunchPad" type="CSGBox3D" parent="." groups=["Start"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.8796, 0.25, 0)
@@ -54,7 +54,47 @@ next_level_path = "uid://c61gvpt0am50f"
 [node name="Floor" type="CSGBox3D" parent="." groups=["Hazard"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
 use_collision = true
-size = Vector3(30, 8, 5)
+size = Vector3(60, 8, 5)
+material = SubResource("StandardMaterial3D_5xgho")
+
+[node name="Wall" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(0.953412, -0.301671, 0, 0.301671, 0.953412, 0, 0, 0, 1, -17.5379, 5.33083, 0)
+size = Vector3(4, 10, 4)
+material = SubResource("StandardMaterial3D_5xgho")
+
+[node name="Wall2" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(0.911087, 0.412214, 0, -0.412214, 0.911087, 0, 0, 0, 1, -17.5379, 13.972, 0)
+size = Vector3(4, 10, 4)
+material = SubResource("StandardMaterial3D_5xgho")
+
+[node name="Wall3" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(0.957284, 0.289149, 0, -0.289149, 0.957284, 0, 0, 0, 1, 18.3022, 8.26324, 0)
+size = Vector3(4, 10, 4)
+material = SubResource("StandardMaterial3D_5xgho")
+
+[node name="Wall4" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(0.812613, -0.582804, 0, 0.582804, 0.812613, 0, 0, 0, 1, 17.084, 16.392, 0)
+size = Vector3(4, 10, 4)
+material = SubResource("StandardMaterial3D_5xgho")
+
+[node name="Wall5" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(-0.370703, -0.928751, 0, 0.928751, -0.370703, 0, 0, 0, 1, 10.8796, 19.866, 0)
+size = Vector3(4, 10, 4)
+material = SubResource("StandardMaterial3D_5xgho")
+
+[node name="Ceiling" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(-0.447104, 0.894482, 0, -0.894482, -0.447104, 0, 0, 0, 1, -12.5619, 18.9296, 0)
+size = Vector3(4, 10, 4)
+material = SubResource("StandardMaterial3D_5xgho")
+
+[node name="Ceiling2" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(-0.447104, 0.894482, 0, -0.894482, -0.447104, 0, 0, 0, 1, -6.10671, 19.1036, 0)
+size = Vector3(4, 10, 4)
+material = SubResource("StandardMaterial3D_5xgho")
+
+[node name="Ceiling3" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(0.153417, 0.988162, 0, -0.988162, 0.153417, 0, 0, 0, 1, 2.16286, 18.5442, 0)
+size = Vector3(4, 10, 4)
 material = SubResource("StandardMaterial3D_5xgho")
 
 [node name="Player" parent="." instance=ExtResource("1_u52ul")]
