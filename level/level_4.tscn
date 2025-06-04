@@ -1,21 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://ceq8kn2om8ggv"]
+[gd_scene load_steps=8 format=3 uid="uid://ceq8kn2om8ggv"]
 
 [ext_resource type="Script" uid="uid://cr4jddhq3xj8e" path="res://level/landing_pad.gd" id="1_klklu"]
 [ext_resource type="PackedScene" uid="uid://d2o4en7045888" path="res://player.tscn" id="2_2loia"]
 [ext_resource type="PackedScene" uid="uid://jvwsxhamguvp" path="res://moving_hazard.tscn" id="3_2loia"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5xgho"]
-sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
-ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
-
-[sub_resource type="Sky" id="Sky_u52ul"]
-sky_material = SubResource("ProceduralSkyMaterial_5xgho")
-
-[sub_resource type="Environment" id="Environment_vonw3"]
-background_mode = 2
-sky = SubResource("Sky_u52ul")
-tonemap_mode = 2
-glow_enabled = true
+[ext_resource type="PackedScene" uid="uid://cyruqwsd5u74w" path="res://background.tscn" id="4_t4xmy"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u52ul"]
 albedo_color = Color(0.030886, 0.47477, 0.958749, 1)
@@ -27,13 +15,6 @@ albedo_color = Color(0.170132, 0.676268, 0.343459, 1)
 albedo_color = Color(0.314692, 0.0898623, 0.030847, 1)
 
 [node name="Level" type="Node3D"]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_vonw3")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866024, -0.433016, 0.250001, 0.453943, -0.471295, 0.756186, -0.209616, 0.76836, 0.604717, 0.0801497, 5.5114, 0)
-shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.993534, 0.113533, 0, -0.113533, 0.993534, 0, 3.79128, 12.3116)
@@ -66,3 +47,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
 destination = Vector3(0, 2, 0)
 duration = 2.0
 time_between_positions = 0.5
+
+[node name="Background" parent="." instance=ExtResource("4_t4xmy")]
+transform = Transform3D(0.974008, 0, 0.226515, 0, 1, 0, -0.226515, 0, 0.974008, 0, 0, 0)
