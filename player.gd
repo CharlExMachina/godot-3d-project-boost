@@ -5,8 +5,6 @@ extends RigidBody3D
 @onready var success_audio: AudioStreamPlayer = $SuccessAudio
 @onready var rocket_audio: AudioStreamPlayer3D = $RocketAudio
 @onready var booster_particles: GPUParticles3D = $BoosterParticles
-@onready var booster_particles_left: GPUParticles3D = $BoosterParticlesLeft
-@onready var booster_particles_right: GPUParticles3D = $BoosterParticlesRight
 @onready var explosion_particles: GPUParticles3D = $ExplosionParticles
 @onready var success_particles: GPUParticles3D = $SuccessParticles
 
@@ -32,16 +30,10 @@ func _physics_process(delta: float) -> void:
 		rocket_audio.stop()
 
 	if Input.is_action_pressed("rotate_left") and not Input.is_action_pressed("rotate_right"):
-		booster_particles_right.emitting = true
 		apply_torque(Vector3(0.0, 0.0, torque * delta))
-	else:
-		booster_particles_right.emitting = false
 
 	if Input.is_action_pressed("rotate_right") and not Input.is_action_just_released("rotate_left"):
-		booster_particles_left.emitting = true
 		apply_torque(Vector3(0.0, 0.0, -torque * delta))
-	else:
-		booster_particles_left.emitting = false
 
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().quit()
@@ -61,8 +53,6 @@ func _on_body_entered(body: Node) -> void:
 
 func crash_sequence() -> void:
 	booster_particles.emitting = false
-	booster_particles_left.emitting = false
-	booster_particles_right.emitting = false
 	rocket_audio.stop()
 
 	explosion_particles.emitting = true
