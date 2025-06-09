@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://c4wxt3aq6dtni"
-path="res://.godot/imported/rocket_finsA.glb-34c2cace72158835f4025add752fe892.scn"
+path="res://.godot/imported/rocket_finsA.glb-5b47670a993a73b5f326aa6728967b67.scn"
 
 [deps]
 
-source_file="res://player/rocket_finsA.glb"
-dest_files=["res://.godot/imported/rocket_finsA.glb-34c2cace72158835f4025add752fe892.scn"]
+source_file="res://player/models/rocket_finsA.glb"
+dest_files=["res://.godot/imported/rocket_finsA.glb-5b47670a993a73b5f326aa6728967b67.scn"]
 
 [params]
 

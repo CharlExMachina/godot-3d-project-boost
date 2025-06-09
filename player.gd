@@ -7,6 +7,9 @@ extends RigidBody3D
 @onready var booster_particles: GPUParticles3D = $BoosterParticles
 @onready var explosion_particles: GPUParticles3D = $ExplosionParticles
 @onready var success_particles: GPUParticles3D = $SuccessParticles
+@onready var rocket_base: Node3D = $Body/rocket_baseB2
+@onready var recovery_timer: Timer = $RecoveryTimer
+@onready var crash_sound: AudioStreamPlayer = $CrashSound
 
 ## How much vertical force to apply when moving
 @export_range(75.0, 3_000.0) var thrust: float = 1_000.0
@@ -14,12 +17,25 @@ extends RigidBody3D
 ## How much rotation force to apply while moving
 @export var torque: float = 100.0
 
+## The color that shows up when the player's rocket receives damage
+@export var damage_color: Color = Color.INDIAN_RED
+
 ## Controls whether or not the player is in the process of changing scenes
 var is_transitioning: bool = false
 
+var damage_amount: float = 0.0
+
+## Controls whether the player is recovering from crashing with an object
+var is_in_recovery: bool = false
+
+
+func _ready() -> void:
+	var base = rocket_base.get_node("tmpParent/rocket_baseB") as MeshInstance3D
+	var yellow_surface = base.get_active_material(2)
+
 
 func _physics_process(delta: float) -> void:
-	if Input.is_action_pressed("boost"):
+	if Input.is_action_pressed("boost") and not is_in_recovery:
 		apply_central_force(basis.y * delta * thrust)
 		booster_particles.emitting = true
 
@@ -39,6 +55,22 @@ func _physics_process(delta: float) -> void:
 		get_tree().quit()
 
 
+func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
+	if state.get_contact_count() > 0 and not is_in_recovery:
+		var collision_object = state.get_contact_collider_object(0)
+
+		if (collision_object as Node3D).is_in_group("Hazard"):
+			push_player(state.get_contact_collider_position(0))
+
+
+func push_player(collision_position: Vector3) -> void:
+	crash_sound.play()
+	is_in_recovery = true
+	var direction = (global_position - collision_position).normalized()
+	apply_central_force(Vector3(direction.x, direction.y, 0.0) * 200)
+	recovery_timer.start()
+
+
 func _on_body_entered(body: Node) -> void:
 	if is_transitioning:
 		return
@@ -48,6 +80,14 @@ func _on_body_entered(body: Node) -> void:
 	elif "Start" in body.get_groups():
 		print("Starting position set!")
 	elif "Hazard" in body.get_groups():
+		increase_damage_amount()
+
+
+func increase_damage_amount() -> void:
+	damage_amount += 10
+	print("Damage ", damage_amount)
+
+	if damage_amount >= 100:
 		crash_sequence()
 
 
@@ -76,3 +116,7 @@ func complete_level(next_level_file: String) -> void:
 	tween.tween_callback(
 		get_tree().change_scene_to_file.bind(next_level_file)
 	)
+
+
+func _on_recovery_timer_timeout() -> void:
+	is_in_recovery = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d2o4en7045888"]
+[gd_scene load_steps=16 format=3 uid="uid://d2o4en7045888"]
 
 [ext_resource type="Script" uid="uid://bdc3q6tw6bwvt" path="res://player.gd" id="1_4flbx"]
 [ext_resource type="AudioStream" uid="uid://b8jy70o4l7y6r" path="res://audio/SFX - Death Explosion.ogg" id="2_onrkg"]
@@ -7,11 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://f0ow11apxf6h" path="res://particles/booster_particles.tscn" id="5_sweqy"]
 [ext_resource type="PackedScene" uid="uid://dcecb8hw7dbrv" path="res://particles/explosion_particles.tscn" id="6_2hs0m"]
 [ext_resource type="PackedScene" uid="uid://jfwajmrh6ca7" path="res://particles/success_particles.tscn" id="7_1jxqw"]
-[ext_resource type="PackedScene" uid="uid://cs1xo073nwgkf" path="res://player/rocket_baseB.glb" id="12_u1c27"]
-[ext_resource type="PackedScene" uid="uid://c4wxt3aq6dtni" path="res://player/rocket_finsA.glb" id="13_op7ga"]
-[ext_resource type="PackedScene" uid="uid://bd7n62gn7jyaf" path="res://player/rocket_fuelA.glb" id="14_q13i1"]
-[ext_resource type="PackedScene" uid="uid://dli8i4j2fam4x" path="res://player/rocket_sidesA.glb" id="15_pylmc"]
-[ext_resource type="PackedScene" uid="uid://rrhlop3ixweh" path="res://player/rocket_topA.glb" id="16_pbfsw"]
+[ext_resource type="PackedScene" uid="uid://cs1xo073nwgkf" path="res://player/models/rocket_baseB.glb" id="12_u1c27"]
+[ext_resource type="PackedScene" uid="uid://c4wxt3aq6dtni" path="res://player/models/rocket_finsA.glb" id="13_op7ga"]
+[ext_resource type="AudioStream" uid="uid://diqwogdtx0myh" path="res://player/sfx/crash_sound.wav" id="13_urp6f"]
+[ext_resource type="PackedScene" uid="uid://bd7n62gn7jyaf" path="res://player/models/rocket_fuelA.glb" id="14_q13i1"]
+[ext_resource type="PackedScene" uid="uid://dli8i4j2fam4x" path="res://player/models/rocket_sidesA.glb" id="15_pylmc"]
+[ext_resource type="PackedScene" uid="uid://rrhlop3ixweh" path="res://player/models/rocket_topA.glb" id="16_pbfsw"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_hqtel"]
 
@@ -29,6 +30,10 @@ script = ExtResource("1_4flbx")
 thrust = 1600.0
 torque = 230.0
 metadata/_edit_group_ = true
+
+[node name="RecoveryTimer" type="Timer" parent="."]
+wait_time = 1.2
+one_shot = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 visible = false
@@ -74,4 +79,8 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1, 0.106616, 0)
 [node name="rocket_topA2" parent="Body" instance=ExtResource("16_pbfsw")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1, 0.606512, 0)
 
+[node name="CrashSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_urp6f")
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="RecoveryTimer" to="." method="_on_recovery_timer_timeout"]

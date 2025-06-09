@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dli8i4j2fam4x"
-path="res://.godot/imported/rocket_sidesA.glb-93b01b13513a1e9b6da2e0718dd93d6a.scn"
+uid="uid://cnoqfhaf0ygfj"
+path="res://.godot/imported/rocket_sidesB.glb-b217013ffa3ea7d1109a247d83f21e22.scn"
 
 [deps]
 
-source_file="res://player/rocket_sidesA.glb"
-dest_files=["res://.godot/imported/rocket_sidesA.glb-93b01b13513a1e9b6da2e0718dd93d6a.scn"]
+source_file="res://player/models/rocket_sidesB.glb"
+dest_files=["res://.godot/imported/rocket_sidesB.glb-b217013ffa3ea7d1109a247d83f21e22.scn"]
 
 [params]
 

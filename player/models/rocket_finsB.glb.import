@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cs1xo073nwgkf"
-path="res://.godot/imported/rocket_baseB.glb-f11c39d476c2de0b0955fa82c7f0c4d5.scn"
+uid="uid://bw2f1kmtk7hn0"
+path="res://.godot/imported/rocket_finsB.glb-aceec0b88f6ffc296dd104f4e6c3605d.scn"
 
 [deps]
 
-source_file="res://player/rocket_baseB.glb"
-dest_files=["res://.godot/imported/rocket_baseB.glb-f11c39d476c2de0b0955fa82c7f0c4d5.scn"]
+source_file="res://player/models/rocket_finsB.glb"
+dest_files=["res://.godot/imported/rocket_finsB.glb-aceec0b88f6ffc296dd104f4e6c3605d.scn"]
 
 [params]
 

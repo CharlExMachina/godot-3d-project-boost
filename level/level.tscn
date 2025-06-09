@@ -1,7 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://c0t28b6goculu"]
+[gd_scene load_steps=11 format=3 uid="uid://c0t28b6goculu"]
 
 [ext_resource type="Script" uid="uid://cr4jddhq3xj8e" path="res://level/landing_pad.gd" id="1_5gx2l"]
 [ext_resource type="PackedScene" uid="uid://d2o4en7045888" path="res://player.tscn" id="1_u52ul"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5gx2l"]
+sky_top_color = Color(0.28486, 0.56552, 0.956003, 1)
+sky_horizon_color = Color(0.716066, 0.758927, 0.820343, 1)
+ground_horizon_color = Color(0.716066, 0.758927, 0.820343, 1)
+
+[sub_resource type="Sky" id="Sky_qohg2"]
+sky_material = SubResource("ProceduralSkyMaterial_5gx2l")
+
+[sub_resource type="Environment" id="Environment_vkbyq"]
+background_mode = 2
+sky = SubResource("Sky_qohg2")
+tonemap_mode = 2
+glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u52ul"]
 albedo_color = Color(0.030886, 0.47477, 0.958749, 1)
@@ -12,7 +26,18 @@ albedo_color = Color(0.170132, 0.676268, 0.343459, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5xgho"]
 albedo_color = Color(0.314692, 0.0898623, 0.030847, 1)
 
+[sub_resource type="CylinderMesh" id="CylinderMesh_5gx2l"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_5gx2l"]
+
 [node name="Level" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vkbyq")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.820062, 0.572275, 0, -0.572275, 0.820062, 0, 13.4884, 0)
+shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.998135, 0.0610485, 0, -0.0610485, 0.998135, 0, 7.391, 12.312)
@@ -40,6 +65,11 @@ material = SubResource("StandardMaterial3D_5xgho")
 [node name="Player" parent="." instance=ExtResource("1_u52ul")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.8796, 1.5, 0)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.563973, 0.825793, 0, -0.825793, 0.563973, 0, 13.4884, 0)
-shadow_enabled = true
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." groups=["Hazard"]]
+transform = Transform3D(2.73712, 0, 0, 0, 2.73712, 0, 0, 0, 2.73712, 0, 14.8911, 0)
+mesh = SubResource("CylinderMesh_5gx2l")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" groups=["Hazard"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("CylinderShape3D_5gx2l")
