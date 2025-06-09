@@ -63,7 +63,8 @@ max_contacts_reported = 10
 linear_damp = 1.0
 angular_damp = 3.0
 script = ExtResource("1_4flbx")
-thrust = 1500.0
+thrust = 1600.0
+torque = 230.0
 metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

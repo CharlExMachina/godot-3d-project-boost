@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://c61gvpt0am50f"]
+[gd_scene load_steps=8 format=3 uid="uid://c61gvpt0am50f"]
 
 [ext_resource type="Script" uid="uid://cr4jddhq3xj8e" path="res://level/landing_pad.gd" id="1_lo0xd"]
 [ext_resource type="PackedScene" uid="uid://d2o4en7045888" path="res://player.tscn" id="2_oc35s"]
-[ext_resource type="PackedScene" uid="uid://cyruqwsd5u74w" path="res://background.tscn" id="3_oc35s"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u52ul"]
 albedo_color = Color(0.030886, 0.47477, 0.958749, 1)
@@ -58,5 +57,3 @@ material = SubResource("StandardMaterial3D_oc35s")
 
 [node name="Player" parent="." instance=ExtResource("2_oc35s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.8796, 1.5, 0)
-
-[node name="Background" parent="." instance=ExtResource("3_oc35s")]
