@@ -1,6 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://d2o4en7045888"]
+[gd_scene load_steps=17 format=3 uid="uid://d2o4en7045888"]
 
 [ext_resource type="Script" uid="uid://bdc3q6tw6bwvt" path="res://player.gd" id="1_4flbx"]
+[ext_resource type="PackedScene" uid="uid://c8uohcrk1ecb0" path="res://player/hud/hud.tscn" id="2_bwjto"]
 [ext_resource type="AudioStream" uid="uid://b8jy70o4l7y6r" path="res://audio/SFX - Death Explosion.ogg" id="2_onrkg"]
 [ext_resource type="AudioStream" uid="uid://dppifcosgie1y" path="res://audio/SFX - Success.ogg" id="3_i3pqv"]
 [ext_resource type="AudioStream" uid="uid://dvqi34e2hx101" path="res://audio/SFX - Main engine thrust.ogg" id="4_hqtel"]
@@ -29,18 +30,17 @@ angular_damp = 3.0
 script = ExtResource("1_4flbx")
 thrust = 1600.0
 torque = 230.0
+floor_recovery_impulse_force = 500.0
 metadata/_edit_group_ = true
+
+[node name="HUD" parent="." instance=ExtResource("2_bwjto")]
 
 [node name="RecoveryTimer" type="Timer" parent="."]
 wait_time = 1.2
 one_shot = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-visible = false
-mesh = SubResource("CylinderMesh_hqtel")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CylinderShape3D_4flbx")
+[node name="CrashSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_urp6f")
 
 [node name="ExplosionAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_onrkg")
@@ -49,6 +49,13 @@ volume_db = -11.87
 [node name="SuccessAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_i3pqv")
 volume_db = -5.86
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("CylinderMesh_hqtel")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_4flbx")
 
 [node name="RocketAudio" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("4_hqtel")
@@ -78,9 +85,6 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1, 0.106616, 0)
 
 [node name="rocket_topA2" parent="Body" instance=ExtResource("16_pbfsw")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1, 0.606512, 0)
-
-[node name="CrashSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("13_urp6f")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="RecoveryTimer" to="." method="_on_recovery_timer_timeout"]

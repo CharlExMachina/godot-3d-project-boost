@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8uohcrk1ecb0"]
+
+[ext_resource type="Script" uid="uid://edh8wjhv2cg2" path="res://player/hud/hud.gd" id="1_vhn6v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_urp6f"]
+bg_color = Color(0.03, 0.03, 0.03, 0.290196)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bwjto"]
+bg_color = Color(0.974877, 0.176307, 0.176307, 1)
+corner_radius_top_left = 8
+corner_radius_bottom_left = 8
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vhn6v")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -92.0
+offset_top = 25.0
+offset_right = -23.0
+offset_bottom = 48.0
+grow_horizontal = 0
+text = "DAMAGE"
+
+[node name="DamageBar" type="ProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -231.0
+offset_top = 50.0
+offset_right = -23.0
+offset_bottom = 73.0
+grow_horizontal = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_urp6f")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bwjto")

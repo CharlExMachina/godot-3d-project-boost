@@ -10,6 +10,8 @@ extends RigidBody3D
 @onready var rocket_base: Node3D = $Body/rocket_baseB2
 @onready var recovery_timer: Timer = $RecoveryTimer
 @onready var crash_sound: AudioStreamPlayer = $CrashSound
+@onready var hud: Control = $HUD
+
 
 ## How much vertical force to apply when moving
 @export_range(75.0, 3_000.0) var thrust: float = 1_000.0
@@ -20,18 +22,34 @@ extends RigidBody3D
 ## The color that shows up when the player's rocket receives damage
 @export var damage_color: Color = Color.INDIAN_RED
 
+## How strong will the player bounce back if they get stuck on the floor
+@export var floor_recovery_impulse_force: float = 600.0
+
+## How short the recovery time will be in seconds when stuck on the floor
+@export var floor_recovery_wait_time: float = 0.5
+
 ## Controls whether or not the player is in the process of changing scenes
 var is_transitioning: bool = false
-
-var damage_amount: float = 0.0
 
 ## Controls whether the player is recovering from crashing with an object
 var is_in_recovery: bool = false
 
+var damage_amount: float = 0.0
+var velocity_in_frame: Vector3 = Vector3.ZERO
+var should_update_velocity_in_frame: bool = true
+var frame: float = 0.0
+var default_recovery_time: float = 0.0
+
 
 func _ready() -> void:
+	default_recovery_time = recovery_timer.wait_time
+
 	var base = rocket_base.get_node("tmpParent/rocket_baseB") as MeshInstance3D
 	var yellow_surface = base.get_active_material(2)
+
+
+func _process(delta: float) -> void:
+	velocity_in_frame = linear_velocity
 
 
 func _physics_process(delta: float) -> void:
@@ -57,17 +75,29 @@ func _physics_process(delta: float) -> void:
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	if state.get_contact_count() > 0 and not is_in_recovery:
+		should_update_velocity_in_frame = false
 		var collision_object = state.get_contact_collider_object(0)
+		var velocity_length_on_impact = velocity_in_frame.length_squared()
 
 		if (collision_object as Node3D).is_in_group("Hazard"):
-			push_player(state.get_contact_collider_position(0))
+			push_player(state.get_contact_collider_position(0), velocity_length_on_impact)
+			increase_damage_amount(ceil(velocity_length_on_impact * 0.03))
 
 
-func push_player(collision_position: Vector3) -> void:
+func push_player(collision_position: Vector3, force_multiplier: float = 0) -> void:
 	crash_sound.play()
 	is_in_recovery = true
+
 	var direction = (global_position - collision_position).normalized()
-	apply_central_force(Vector3(direction.x, direction.y, 0.0) * 200)
+
+	if force_multiplier > 0.001:
+		apply_central_force(Vector3(direction.x, direction.y, 0.0) * force_multiplier)
+	else:
+		apply_central_force(Vector3.UP * floor_recovery_impulse_force)
+		recovery_timer.wait_time = floor_recovery_wait_time
+		recovery_timer.start()
+		return
+
 	recovery_timer.start()
 
 
@@ -79,16 +109,17 @@ func _on_body_entered(body: Node) -> void:
 		complete_level(body.next_level_path)
 	elif "Start" in body.get_groups():
 		print("Starting position set!")
-	elif "Hazard" in body.get_groups():
-		increase_damage_amount()
 
 
-func increase_damage_amount() -> void:
-	damage_amount += 10
-	print("Damage ", damage_amount)
+func increase_damage_amount(speed_on_impact: float) -> void:
+	damage_amount += speed_on_impact
 
 	if damage_amount >= 100:
+		damage_amount = 100
 		crash_sequence()
+
+	hud.set_damage_percentage(damage_amount)
+
 
 
 func crash_sequence() -> void:
@@ -120,3 +151,7 @@ func complete_level(next_level_file: String) -> void:
 
 func _on_recovery_timer_timeout() -> void:
 	is_in_recovery = false
+	should_update_velocity_in_frame = true
+
+	if (recovery_timer.wait_time != default_recovery_time):
+		recovery_timer.wait_time = default_recovery_time
