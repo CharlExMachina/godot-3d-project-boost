@@ -1,6 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8uohcrk1ecb0"]
+[gd_scene load_steps=7 format=3 uid="uid://c8uohcrk1ecb0"]
 
 [ext_resource type="Script" uid="uid://edh8wjhv2cg2" path="res://player/hud/hud.gd" id="1_vhn6v"]
+[ext_resource type="FontFile" uid="uid://cdvuoob8i4oj5" path="res://fonts/Quantico-Bold.ttf" id="2_5rf3r"]
+[ext_resource type="FontFile" uid="uid://0qte4r67kpu3" path="res://fonts/Quantico-Regular.ttf" id="2_qtddk"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5rf3r"]
+font = ExtResource("2_5rf3r")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_urp6f"]
 bg_color = Color(0.03, 0.03, 0.03, 0.290196)
@@ -34,6 +39,7 @@ offset_right = -23.0
 offset_bottom = 48.0
 grow_horizontal = 0
 text = "DAMAGE"
+label_settings = SubResource("LabelSettings_5rf3r")
 
 [node name="DamageBar" type="ProgressBar" parent="."]
 layout_mode = 1
@@ -45,5 +51,6 @@ offset_top = 50.0
 offset_right = -23.0
 offset_bottom = 73.0
 grow_horizontal = 0
+theme_override_fonts/font = ExtResource("2_qtddk")
 theme_override_styles/background = SubResource("StyleBoxFlat_urp6f")
 theme_override_styles/fill = SubResource("StyleBoxFlat_bwjto")
