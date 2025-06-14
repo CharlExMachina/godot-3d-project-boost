@@ -1,7 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://c0t28b6goculu"]
+[gd_scene load_steps=12 format=3 uid="uid://c0t28b6goculu"]
 
 [ext_resource type="PackedScene" uid="uid://by217puiqqagd" path="res://level/landing_pad.tscn" id="1_5gx2l"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_ktfr2"]
 [ext_resource type="PackedScene" uid="uid://d2o4en7045888" path="res://player.tscn" id="1_u52ul"]
+[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="2_44x8d"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_ivpvi"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5gx2l"]
 sky_top_color = Color(0.28486, 0.56552, 0.956003, 1)
@@ -16,6 +19,12 @@ background_mode = 2
 sky = SubResource("Sky_qohg2")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="Resource" id="Resource_0v1st"]
+script = ExtResource("3_ivpvi")
+duration = 1.0
+transition = 0
+ease = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u52ul"]
 albedo_color = Color(0.030886, 0.47477, 0.958749, 1)
@@ -32,8 +41,30 @@ environment = SubResource("Environment_vkbyq")
 transform = Transform3D(1, 0, 0, 0, 0.820062, 0.572275, 0, -0.572275, 0.820062, 0, 13.4884, 0)
 shadow_enabled = true
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.998135, 0.0610485, 0, -0.0610485, 0.998135, 0, 7.391, 12.312)
+[node name="MainCamera" type="Camera3D" parent="."]
+physics_interpolation_mode = 1
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5654, 5.895, 38.25)
+fov = 37.8493
+
+[node name="PhantomCameraHost" type="Node" parent="MainCamera"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("1_ktfr2")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
+
+[node name="CameraGroup" type="Node" parent="."]
+
+[node name="PhantomCamera3D" type="Node3D" parent="CameraGroup" node_paths=PackedStringArray("follow_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5654, 5.895, 38.25)
+top_level = true
+script = ExtResource("2_44x8d")
+follow_mode = 2
+follow_target = NodePath("../../Player")
+tween_resource = SubResource("Resource_0v1st")
+follow_offset = Vector3(15.445, 4.395, 38.25)
+follow_damping = true
+follow_damping_value = Vector3(0.23, 0.41, 0.1)
+metadata/_custom_type_script = "uid://csjccrhj5wnx7"
 
 [node name="LaunchPad" type="CSGBox3D" parent="." groups=["Start"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.8796, 0.25, 0)
