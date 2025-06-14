@@ -1,6 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://c0t28b6goculu"]
+[gd_scene load_steps=8 format=3 uid="uid://c0t28b6goculu"]
 
-[ext_resource type="Script" uid="uid://cr4jddhq3xj8e" path="res://level/landing_pad.gd" id="1_5gx2l"]
+[ext_resource type="PackedScene" uid="uid://by217puiqqagd" path="res://level/landing_pad.tscn" id="1_5gx2l"]
 [ext_resource type="PackedScene" uid="uid://d2o4en7045888" path="res://player.tscn" id="1_u52ul"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5gx2l"]
@@ -19,9 +19,6 @@ glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u52ul"]
 albedo_color = Color(0.030886, 0.47477, 0.958749, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vonw3"]
-albedo_color = Color(0.170132, 0.676268, 0.343459, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5xgho"]
 albedo_color = Color(0.314692, 0.0898623, 0.030847, 1)
@@ -44,13 +41,8 @@ use_collision = true
 size = Vector3(3, 0.5, 3)
 material = SubResource("StandardMaterial3D_u52ul")
 
-[node name="LandingPad" type="CSGBox3D" parent="." groups=["Goal"]]
+[node name="LandingPad" parent="." instance=ExtResource("1_5gx2l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.88, 0.25, 0)
-use_collision = true
-size = Vector3(3, 0.5, 3)
-material = SubResource("StandardMaterial3D_vonw3")
-script = ExtResource("1_5gx2l")
-next_level_path = "uid://c61gvpt0am50f"
 
 [node name="Floor" type="CSGBox3D" parent="." groups=["Hazard"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
