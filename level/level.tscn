@@ -43,7 +43,7 @@ shadow_enabled = true
 
 [node name="MainCamera" type="Camera3D" parent="."]
 physics_interpolation_mode = 1
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5654, 5.895, 38.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4646, 9.085, 44.59)
 fov = 37.8493
 
 [node name="PhantomCameraHost" type="Node" parent="MainCamera"]
@@ -55,15 +55,15 @@ metadata/_custom_type_script = "uid://bd046eokvcnu2"
 [node name="CameraGroup" type="Node" parent="."]
 
 [node name="PhantomCamera3D" type="Node3D" parent="CameraGroup" node_paths=PackedStringArray("follow_target")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5654, 5.895, 38.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4646, 9.085, 44.59)
 top_level = true
 script = ExtResource("2_44x8d")
 follow_mode = 2
 follow_target = NodePath("../../Player")
 tween_resource = SubResource("Resource_0v1st")
-follow_offset = Vector3(15.445, 4.395, 38.25)
+follow_offset = Vector3(12.415, 7.585, 44.59)
 follow_damping = true
-follow_damping_value = Vector3(0.23, 0.41, 0.1)
+follow_damping_value = Vector3(0.2, 0.41, 0.1)
 metadata/_custom_type_script = "uid://csjccrhj5wnx7"
 
 [node name="LaunchPad" type="CSGBox3D" parent="." groups=["Start"]]
