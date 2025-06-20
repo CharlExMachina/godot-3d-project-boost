@@ -1,11 +1,21 @@
-[gd_scene load_steps=7 format=3 uid="uid://c8uohcrk1ecb0"]
+[gd_scene load_steps=10 format=3 uid="uid://c8uohcrk1ecb0"]
 
 [ext_resource type="Script" uid="uid://edh8wjhv2cg2" path="res://player/hud/hud.gd" id="1_vhn6v"]
 [ext_resource type="FontFile" uid="uid://cdvuoob8i4oj5" path="res://fonts/Quantico-Bold.ttf" id="2_5rf3r"]
+[ext_resource type="Script" uid="uid://ejgduuitvi2f" path="res://player/hud/level_timer.gd" id="2_ifci6"]
 [ext_resource type="FontFile" uid="uid://0qte4r67kpu3" path="res://fonts/Quantico-Regular.ttf" id="2_qtddk"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_5rf3r"]
+[sub_resource type="LabelSettings" id="LabelSettings_ifci6"]
 font = ExtResource("2_5rf3r")
+font_size = 36
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_d35iv"]
+font = ExtResource("2_5rf3r")
+font_size = 36
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_urp6f"]
 bg_color = Color(0.03, 0.03, 0.03, 0.290196)
@@ -19,6 +29,11 @@ bg_color = Color(0.974877, 0.176307, 0.176307, 1)
 corner_radius_top_left = 8
 corner_radius_bottom_left = 8
 
+[sub_resource type="LabelSettings" id="LabelSettings_5rf3r"]
+font = ExtResource("2_5rf3r")
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
 [node name="HUD" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -28,29 +43,73 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vhn6v")
 
-[node name="Label" type="Label" parent="."]
+[node name="LevelTimer" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -92.0
-offset_top = 25.0
-offset_right = -23.0
-offset_bottom = 48.0
-grow_horizontal = 0
-text = "DAMAGE"
-label_settings = SubResource("LabelSettings_5rf3r")
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -148.0
+offset_top = 12.0
+offset_right = 148.0
+offset_bottom = 65.0
+grow_horizontal = 2
+theme_override_constants/separation = -4
+script = ExtResource("2_ifci6")
+metadata/_edit_group_ = true
+
+[node name="TimeLabel" type="Label" parent="LevelTimer"]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+text = "TIME"
+label_settings = SubResource("LabelSettings_ifci6")
+
+[node name="MinutesLabel" type="Label" parent="LevelTimer"]
+custom_minimum_size = Vector2(74, 0)
+layout_mode = 2
+text = "00:"
+label_settings = SubResource("LabelSettings_d35iv")
+horizontal_alignment = 2
+
+[node name="SecondsLabel" type="Label" parent="LevelTimer"]
+custom_minimum_size = Vector2(66, 0)
+layout_mode = 2
+text = "00."
+label_settings = SubResource("LabelSettings_d35iv")
+horizontal_alignment = 2
+
+[node name="MillisecondsLabel" type="Label" parent="LevelTimer"]
+custom_minimum_size = Vector2(78, 0)
+layout_mode = 2
+text = "000"
+label_settings = SubResource("LabelSettings_d35iv")
+horizontal_alignment = 2
 
 [node name="DamageBar" type="ProgressBar" parent="."]
 layout_mode = 1
-anchors_preset = 1
+anchors_preset = 3
 anchor_left = 1.0
+anchor_top = 1.0
 anchor_right = 1.0
-offset_left = -231.0
-offset_top = 50.0
-offset_right = -23.0
-offset_bottom = 73.0
+anchor_bottom = 1.0
+offset_left = -237.0
+offset_top = -46.0
+offset_right = -29.0
+offset_bottom = -22.0
 grow_horizontal = 0
+grow_vertical = 0
 theme_override_fonts/font = ExtResource("2_qtddk")
 theme_override_styles/background = SubResource("StyleBoxFlat_urp6f")
 theme_override_styles/fill = SubResource("StyleBoxFlat_bwjto")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="DamageBar"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -69.0
+offset_top = -25.0
+offset_bottom = -1.0
+grow_horizontal = 0
+text = "DAMAGE"
+label_settings = SubResource("LabelSettings_5rf3r")

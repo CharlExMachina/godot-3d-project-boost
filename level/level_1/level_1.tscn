@@ -42,7 +42,16 @@ mesh = SubResource("BoxMesh_s2urf")
 [node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="Obstacles/CSGMesh3D3/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_s2urf")
 
-[node name="CSGMesh3D4" type="CSGMesh3D" parent="Obstacles" index="1"]
+[node name="CSGMesh3D7" type="CSGMesh3D" parent="Obstacles" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.6232, 8.00523, 0)
+mesh = SubResource("BoxMesh_s2urf")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Obstacles/CSGMesh3D7" index="0" groups=["Hazard"]]
+
+[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="Obstacles/CSGMesh3D7/StaticBody3D" index="0"]
+shape = SubResource("ConcavePolygonShape3D_s2urf")
+
+[node name="CSGMesh3D4" type="CSGMesh3D" parent="Obstacles" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.0843, 17.6492, 0)
 mesh = SubResource("BoxMesh_e32pu")
 
@@ -51,7 +60,7 @@ mesh = SubResource("BoxMesh_e32pu")
 [node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="Obstacles/CSGMesh3D4/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_b8haq")
 
-[node name="CSGMesh3D5" type="CSGMesh3D" parent="Obstacles" index="2"]
+[node name="CSGMesh3D5" type="CSGMesh3D" parent="Obstacles" index="3"]
 transform = Transform3D(0.303734, -0.952757, 0, 0.952757, 0.303734, 0, 0, 0, 1, 6.54628, 9.98787, 0)
 mesh = SubResource("BoxMesh_b8haq")
 
@@ -60,7 +69,7 @@ mesh = SubResource("BoxMesh_b8haq")
 [node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="Obstacles/CSGMesh3D5/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_e32pu")
 
-[node name="CSGMesh3D6" type="CSGMesh3D" parent="Obstacles" index="3"]
+[node name="CSGMesh3D6" type="CSGMesh3D" parent="Obstacles" index="4"]
 transform = Transform3D(0.303734, -0.952757, 0, 0.952757, 0.303734, 0, 0, 0, 1, 16.8756, 14.6875, 0)
 mesh = SubResource("BoxMesh_b8haq")
 

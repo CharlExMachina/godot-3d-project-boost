@@ -107,6 +107,7 @@ func _on_body_entered(body: Node) -> void:
 
 	if "Goal" in body.get_groups():
 		complete_level(body.next_level_path)
+		hud.end_time()
 	elif "Start" in body.get_groups():
 		print("Starting position set!")
 
@@ -155,3 +156,8 @@ func _on_recovery_timer_timeout() -> void:
 
 	if (recovery_timer.wait_time != default_recovery_time):
 		recovery_timer.wait_time = default_recovery_time
+
+
+func _on_body_exited(body: Node) -> void:
+	if "Start" in body.get_groups():
+		hud.start_time()
